@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification
+	xmlns="https://github.com/vqmod/vqmod"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://github.com/vqmod/vqmod https://raw.githubusercontent.com/vqmod/vqmod/master/vqmod.xsd">
+	>
+	<id><![CDATA[[VQMOD] Product > Login Display Availability]]></id>
+	<version>0.1.0</version>
+	<vqmver>2.6.3</vqmver>
+	<author>kanenas.net (aka Nikolas Branis) - nbran@kanenas.net</author>
+	<file path="catalog/controller/product/" name="product.php" error="log">
+		<operation error="skip">
+			<search position="replace" offset="6"><![CDATA[if ($product_info['quantity'] <= 0) {]]></search>
+			<add><![CDATA[
+			if ($this->customer->isLogged()) {
+				if ($product_info['quantity'] <= 0) {
+					$data['stock'] = $product_info['stock_status'];
+				} elseif ($this->config->get('config_stock_display')) {
+					$data['stock'] = $product_info['quantity'];
+				} else {
+					$data['stock'] = $this->language->get('text_instock');
+				}
+			} else {
+				$data['stock'] = false;
+			}
+
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/view/theme/*/template/product/" name="product.tpl" error="log">
+		<operation error="skip">
+			<search position="replace"><![CDATA[<li><?php echo $text_stock; ?> <?php echo $stock; ?></li>]]></search>
+			<add><![CDATA[
+            <?php if ($stock) { ?>
+              <li><?php echo $text_stock; ?> <?php echo $stock; ?></li>
+            <?php } ?>
+			]]></add>
+		</operation>
+	</file>
+</modification>
