@@ -36,5 +36,14 @@
             <?php } ?>
 			]]></add>
 		</operation>
+		<!-- Uncomment the following operation for Journal 2 - Advanced Opencart Theme  -->
+		<!-- <operation error="skip">
+			<search position="replace"><![CDATA[<li class="p-stock"><?php echo $text_stock; ?> <span class="journal-stock <?php echo isset($stock_status) ? $stock_status : ''; ?>"><?php echo $stock; ?></span></li>]]></search>
+			<add><![CDATA[
+            <?php if ($stock) { ?>
+              <li class="p-stock"><?php echo $text_stock; ?> <span class="journal-stock <?php echo isset($stock_status) ? $stock_status : ''; ?>"><?php echo $stock; ?></span></li>
+            <?php } ?>
+			]]></add>
+		</operation> -->
 	</file>
 </modification>
